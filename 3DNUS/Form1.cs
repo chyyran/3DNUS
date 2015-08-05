@@ -178,7 +178,7 @@ namespace _3DNUS
                 }
                 catch (WebException e)
                 {
-                    log(0, "WARNING: " + ((HttpWebResponse)e.Response).StatusCode + " when downloading " + title + "/" + contentid + ". SKIPPING");
+                    log(0, "Error " + ((HttpWebResponse)e.Response).StatusCode + " when downloading " + title + "/" + contentid + ". SKIPPING");
                     tmd.Close();
                     this.skipped.Add(title + "/" + contentid);
                     return;
@@ -263,29 +263,39 @@ namespace _3DNUS
         {
 
             string spoof;
+            string[] titles = null;
             string cd = Path.GetDirectoryName(Application.ExecutablePath);
-            try
+            if (String.IsNullOrWhiteSpace(this.openFileDialog1.SafeFileName))
             {
-                WebClient titlelist = new WebClient();
-                titlelist.DownloadFile("http://yls8.mtheall.com/ninupdates/titlelist.php?sys=ctr&csv=1", cd + "\\titlelist.csv");
-                log(2, "Downloading titlelist complete");
-            }
-            catch
-            {
-                log(2, "Error downloading titlelist");
-                if (File.Exists(cd + "\\titlelist.csv"))
+                try
                 {
-                    log(1, "Using existing titlelist, this maybe not up to date");
+                    WebClient titlelist = new WebClient();
+                    titlelist.DownloadFile("http://yls8.mtheall.com/ninupdates/titlelist.php?sys=ctr&csv=1", cd + "\\titlelist.csv");
+                    log(2, "Downloading titlelist complete");
+                    titles = File.ReadAllLines(cd + "\\titlelist.csv");
+
                 }
-                else
+                catch
                 {
-                    log(1, "Cant find an existing titlelist, this program quits");
-                    return;
-                }                
+                    log(2, "Error downloading titlelist");
+                    if (File.Exists(cd + "\\titlelist.csv"))
+                    {
+                        log(1, "Using existing titlelist, this maybe not up to date");
+                    }
+                    else
+                    {
+                        log(1, "Cant find an existing titlelist, this program quits");
+                        return;
+                    }
+                }
+            }
+            else 
+            {
+                titles = File.ReadAllLines(this.openFileDialog1.FileName);
+                log(1, "Using local titlelist " + this.openFileDialog1.FileName);
             }
 
 
-            string[] titles = File.ReadAllLines(cd + "\\titlelist.csv");
             p_progress.Parent.Invoke(new MethodInvoker(delegate { p_progress.Maximum = (titles.Length); }));
             Directory.CreateDirectory(cd + "\\" + t_titleid.Text);
             foreach (string select1 in titles.Skip(1))
@@ -392,7 +402,15 @@ namespace _3DNUS
             return hexres.ToArray();
         }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.openFileDialog1.ShowDialog();
+        }
+    }
     }
 

@@ -41,6 +41,8 @@
             this.p_input = new System.Windows.Forms.Panel();
             this.l_error = new System.Windows.Forms.Label();
             this.p_progress = new System.Windows.Forms.ProgressBar();
+            this.button1 = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.p_input.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,9 +81,7 @@
             // c_cia
             // 
             this.c_cia.AutoSize = true;
-            this.c_cia.Checked = true;
-            this.c_cia.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.c_cia.Location = new System.Drawing.Point(101, 83);
+            this.c_cia.Location = new System.Drawing.Point(101, 82);
             this.c_cia.Name = "c_cia";
             this.c_cia.Size = new System.Drawing.Size(88, 17);
             this.c_cia.TabIndex = 4;
@@ -114,9 +114,10 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 454);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(79, 13);
+            this.label1.Size = new System.Drawing.Size(88, 13);
             this.label1.TabIndex = 7;
-            this.label1.Text = "V1.7 by ground";
+            this.label1.Text = "V1.10 by ground ";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // t_spoof
             // 
@@ -139,6 +140,7 @@
             // 
             // p_input
             // 
+            this.p_input.Controls.Add(this.button1);
             this.p_input.Controls.Add(this.c_spoof);
             this.p_input.Controls.Add(this.t_spoof);
             this.p_input.Controls.Add(this.b_download);
@@ -171,6 +173,16 @@
             this.p_progress.Name = "p_progress";
             this.p_progress.Size = new System.Drawing.Size(258, 23);
             this.p_progress.TabIndex = 12;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(11, 78);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Titlelist";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Main
             // 
@@ -209,6 +221,8 @@
         private System.Windows.Forms.Panel p_input;
         private System.Windows.Forms.Label l_error;
         private System.Windows.Forms.ProgressBar p_progress;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 
